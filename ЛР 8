@@ -1,0 +1,165 @@
+1) Весёлая семейка
+import random
+
+def computer_question():
+    questions = ["Какой ваш любимый цвет?", "Что вы любите делать на выходных?", "Какой ваш любимый фильм?"]
+    return random.choice(questions)
+
+def computer_response():
+    responses = ["Интересно", "Понятно", "Забавно", "Неожиданно"]
+    return random.choice(responses)
+
+def play_game():
+    history = []
+    
+    for _ in range(5):
+        print("Компьютер бросает вам мяч...")
+        if random.random() <= 0.7:
+            answer = input("Вы поймали мяч! " + computer_question() + ": ")
+            history.append("Вы: " + answer)
+        else:
+            response = computer_response()
+            history.append("Компьютер: " + response)
+        
+        print("Вы бросаете мяч компьютеру...")
+        if random.random() <= 0.7:
+            response = computer_response()
+            history.append("Компьютер: " + response)
+        else:
+            answer = input("Компьютер не поймал мяч! Ваш вопрос: ")
+            history.append("Вы: " + answer)
+    
+    print("\nРезультат игры:")
+    for move in history:
+        print(move)
+
+play_game()
+
+
+
+2) Встраиванивание функций
+def reverse_number(num):
+    reversed_num = 0
+    while num > 0:
+        digit = num % 10
+        reversed_num = reversed_num * 10 + digit
+        num = num // 10
+    return reversed_num
+Пример:
+number = 12345
+reversed_number = reverse_number(number)
+print(f"Исходное число: {number}")
+print(f"Перевернутое число: {reversed_number}")
+
+3) Сложный процент
+def calculate_investment_amount(principal, interest_rate, years):
+    amount = principal * (1 + interest_rate/100)**years
+    return amount
+
+# Ввод данных от пользователя
+principal = float(input("Введите начальную сумму для инвестирования: "))
+interest_rate = float(input("Введите процентную ставку (годовую): "))
+years = int(input("Введите количество лет для инвестирования: "))
+
+# Рассчет и вывод результата
+investment_amount = calculate_investment_amount(principal, interest_rate, years)
+print(f"Итоговая сумма после {years} лет с учетом сложного процента: {investment_amount:.2f}")
+
+4) Теория игр
+import random
+
+def generate_doors(num_doors, num_prizes):
+    doors = ["пусто"] * num_doors
+    prize_indices = random.sample(range(num_doors), num_prizes)
+    
+    for idx in prize_indices:
+        doors[idx] = "приз"
+    
+    return doors
+
+def simulate_game(num_doors, num_prizes, switch_choice):
+    doors = generate_doors(num_doors, num_prizes)
+    
+    player_choice = random.randint(0, num_doors - 1)
+    opened_door = random.choice([idx for idx in range(num_doors) if doors[idx] == "пусто" and idx != player_choice])
+    
+    if switch_choice:
+        player_choice = [idx for idx in range(num_doors) if idx != player_choice and idx != opened_door][0]
+    
+    return doors[player_choice]
+
+# Симулируем игру с двумя игроками, один меняет выбор, другой остается при первоначальном выборе
+num_wins_switch = 0
+num_wins_stay = 0
+num_simulations = 10000
+
+for _ in range(num_simulations):
+    result_switch = simulate_game(3, 1, True)
+    result_stay = simulate_game(3, 1, False)
+    
+    if result_switch == "приз":
+        num_wins_switch += 1
+    if result_stay == "приз":
+        num_wins_stay += 1
+
+print(f"Вероятность выигрыша при смене выбора: {num_wins_switch/num_simulations:.2f}")
+print(f"Вероятность выигрыша при оставании при первоначальном выборе: {num_wins_stay/num_simulations:.2f}")
+
+
+
+5) Лутбоксы
+import random
+
+def open_lootbox():
+    normal_chance = 0.7
+    rare_chance = 0.2
+    epic_chance = 0.1
+    legendary_chance = 0.05
+
+    lootbox_result = random.random()
+
+    if lootbox_result < normal_chance:
+        return "обычный"
+    elif lootbox_result < normal_chance + rare_chance:
+        return "редкий"
+    elif lootbox_result < normal_chance + rare_chance + epic_chance:
+        return "эпический"
+    else:
+        return "легендарный"
+
+def simulate_lootbox_openings(num_openings):
+    loot_counts = {"обычный": 0, "редкий": 0, "эпический": 0, "легендарный": 0}
+    loot_list = []
+
+    for _ in range(num_openings):
+        loot = open_lootbox()
+        loot_counts[loot] += 1
+        loot_list.append(loot)
+
+    return loot_counts, loot_list
+
+def print_loot_results(loot_counts, loot_list):
+    print("Результаты открытия лутбоксов:")
+    for quality, count in loot_counts.items():
+        print(f"{quality.capitalize()}: {count}")
+
+    if loot_counts["эпический"] > 3:
+        print("Удача!")
+    if loot_counts["легендарный"] > 1:
+        print("Большая удача!")
+
+    print("\nПолученные предметы:")
+    for loot in loot_list:
+        if loot == "обычный":
+            print("\033[0mОбычный", end=" ")
+        elif loot == "редкий":
+            print("\033[94mРедкий", end=" ")
+        elif loot == "эпический":
+            print("\033[95mЭпический", end=" ")
+        else:
+            print("\033[93mЛегендарный", end=" ")
+    print("\033[0m")
+
+# Симулируем открытие 20 лутбоксов
+loot_counts, loot_list = simulate_lootbox_openings(20)
+print_loot_results(loot_counts, loot_list)
