@@ -1,0 +1,37 @@
+start:
+double a;
+double b;
+double c;
+
+char operation;
+
+
+Console.WriteLine("Введите первое число : ");
+a = Convert.ToDouble(Console.ReadLine());
+Console.WriteLine("Введите второе число : ");
+b = Convert.ToDouble(Console.ReadLine());
+Console.WriteLine("Выберете оператор");
+operation = Convert.ToChar(Console.ReadLine());
+
+switch (operation)
+{
+    case '+':
+        c = a + b;
+        Console.WriteLine("Ответ " + (a) + " + " + (b) + " = " + (c).ToString());
+        goto start;
+    case '-':
+        c = a - b;
+        Console.WriteLine("Ответ " + (a) + " - " + (b) + " = " + (c).ToString());
+        goto start;
+    case '/':
+        c = a / b;
+        Console.WriteLine("Ответ " + (a) + " / " + (b) + "=" + (c).ToString());
+        goto start;
+    case '*':
+        c = a * b;
+        Console.WriteLine("Ответ " + (a) + " * " + (b) + " = " + (c).ToString());
+        goto start;
+    default:
+        Console.WriteLine("Ошибка оператора ");
+        goto start;
+}
