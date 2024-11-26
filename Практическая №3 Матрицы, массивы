@@ -1,0 +1,224 @@
+//Array 8
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        int[] array = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+        List<int> oddNumbers = new List<int>();
+
+        foreach (int number in array)
+        {
+            if (number % 2 != 0) 
+            {
+                oddNumbers.Add(number);
+            }
+        }
+
+        Console.WriteLine("Нечётные числа:");
+        foreach (int oddNumber in oddNumbers)
+        {
+            Console.WriteLine(oddNumber);
+        }
+
+        int K = oddNumbers.Count;
+        Console.WriteLine($"Количество нечётных чисел: {K}");
+    }
+}
+
+
+
+
+//Array 124
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        int[] array = { 1, 1, 2, 2, 3, 3, 3, 4, 4, 5 };
+        int K = 3; 
+
+        List<List<int>> series = GetSeries(array);
+
+        if (series.Count < K)
+        {
+            Console.WriteLine("Серий в массиве меньше K. Массив остается без изменений.");
+            PrintArray(array);
+            return;
+        }
+
+        SwapSeries(series, K - 1, series.Count - 1, array);
+
+        Console.WriteLine("Измененный массив:");
+        PrintArray(array);
+    }
+
+    static List<List<int>> GetSeries(int[] array)
+    {
+        List<List<int>> series = new List<List<int>>();
+        List<int> currentSeries = new List<int>();
+
+        for (int i = 0; i < array.Length; i++)
+        {
+            if (currentSeries.Count == 0 || currentSeries[0] == array[i])
+            {
+                currentSeries.Add(array[i]);
+            }
+            else
+            {
+                series.Add(new List<int>(currentSeries));
+                currentSeries.Clear();
+                currentSeries.Add(array[i]);
+            }
+        }
+
+        if (currentSeries.Count > 0)
+        {
+            series.Add(currentSeries);
+        }
+
+        return series;
+    }
+
+    static void SwapSeries(List<List<int>> series, int index1, int index2, int[] array)
+    {
+        List<int> temp = series[index1];
+        series[index1] = series[index2];
+        series[index2] = temp;
+
+        int currentIndex = 0;
+        foreach (var s in series)
+        {
+            foreach (var num in s)
+            {
+                array[currentIndex++] = num;
+            }
+        }
+    }
+
+    static void PrintArray(int[] array)
+    {
+        Console.WriteLine(string.Join(", ", array));
+    }
+}
+
+
+
+
+
+//Matrix 2
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Введите количество строк M: ");
+        int M = int.Parse(Console.ReadLine());
+
+        Console.Write("Введите количество столбцов N: ");
+        int N = int.Parse(Console.ReadLine());
+
+        int[,] matrix = new int[M, N];
+
+        for (int j = 0; j < N; j++)
+        {
+            int value = 5 * (j + 1);
+            for (int i = 0; i < M; i++)
+            {
+                matrix[i, j] = value;
+            }
+        }
+
+        Console.WriteLine("Сформированная матрица:");
+        for (int i = 0; i < M; i++)
+        {
+            for (int j = 0; j < N; j++)
+            {
+                Console.Write(matrix[i, j] + "\t");
+            }
+            Console.WriteLine();
+        }
+    }
+}
+
+
+
+
+//Matrix 61
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Введите количество строк M: ");
+        int M = int.Parse(Console.ReadLine());
+
+        Console.Write("Введите количество столбцов N: ");
+        int N = int.Parse(Console.ReadLine());
+
+        int[,] matrix = new int[M, N];
+
+        Console.WriteLine("Введите элементы матрицы:");
+        for (int i = 0; i < M; i++)
+        {
+            for (int j = 0; j < N; j++)
+            {
+                matrix[i, j] = int.Parse(Console.ReadLine());
+            }
+        }
+
+        Console.WriteLine("Исходная матрица:");
+        PrintMatrix(matrix, M, N);
+
+        Console.Write("Введите номер строки K для удаления (1 <= K <= M): ");
+        int K = int.Parse(Console.ReadLine());
+
+        if (K < 1 || K > M)
+        {
+            Console.WriteLine("Ошибка: номер строки должен быть в пределах от 1 до M.");
+            return;
+        }
+
+        int[,] newMatrix = new int[M - 1, N];
+
+        for (int i = 0; i < M; i++)
+        {
+            if (i < K - 1)
+            {
+                for (int j = 0; j < N; j++)
+                {
+                    newMatrix[i, j] = matrix[i, j];
+                }
+            }
+            else if (i > K - 1)
+            {
+                for (int j = 0; j < N; j++)
+                {
+                    newMatrix[i - 1, j] = matrix[i, j];
+                }
+            }
+        }
+
+        Console.WriteLine("Матрица после удаления строки:");
+        PrintMatrix(newMatrix, M - 1, N);
+    }
+
+    static void PrintMatrix(int[,] matrix, int rows, int cols)
+    {
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                Console.Write(matrix[i, j] + "\t");
+            }
+            Console.WriteLine();
+        }
+    }
+}
