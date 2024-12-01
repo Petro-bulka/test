@@ -1,0 +1,105 @@
+//For 13
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.Write("Введите значение N: ");
+        int N = int.Parse(Console.ReadLine());
+
+        double S = 0.0;
+
+        for (int i = 1; i <= N; i++)
+        {
+            // Чередуем знаки: если i четное, вычитаем, если нечетное - добавляем
+            if (i % 2 == 0)
+            {
+                S -= i / 10.0; // i / 10.0 соответствует 1.i
+            }
+            else
+            {
+                S += i / 10.0; // i / 10.0 соответствует 1.i
+            }
+        }
+
+        Console.WriteLine($"Результат S = {S}");
+    }
+}
+
+
+
+//While 15
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.Write("Введите процент P (0 < P < 25): ");
+        double P = double.Parse(Console.ReadLine());
+
+        // Проверка на допустимость значения P
+        if (P <= 0 || P >= 25)
+        {
+            Console.WriteLine("Ошибка: P должно быть в диапазоне (0, 25).");
+            return;
+        }
+
+        double initialDeposit = 1000.0;
+        double targetAmount = 1100.0;
+        double currentAmount = initialDeposit;
+        int months = 0;
+
+        // Цикл, который увеличивает сумму вклада каждый месяц
+        while (currentAmount <= targetAmount)
+        {
+            currentAmount += currentAmount * (P / 100);
+            months++;
+        }
+
+        // Вывод результата
+        Console.WriteLine($"Количество месяцев K: {months}");
+        Console.WriteLine($"Итоговый размер вклада S: {currentAmount:F2} руб.");
+    }
+}
+
+
+
+//Series 16
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.Write("Введите целое число K: ");
+        int K = int.Parse(Console.ReadLine());
+
+        int number;
+        int lastIndex = 0; // Переменная для хранения индекса последнего числа больше K
+        int index = 1; // Индекс текущего вводимого числа
+
+        Console.WriteLine("Введите набор ненулевых целых чисел (0 для завершения):");
+
+        while (true)
+        {
+            number = int.Parse(Console.ReadLine());
+            if (number == 0) // Проверка на завершение ввода
+            {
+                break;
+            }
+
+            // Проверка, больше ли текущее число K
+            if (number > K)
+            {
+                lastIndex = index; // Сохраняем индекс последнего числа больше K
+            }
+
+            index++; // Увеличиваем индекс для следующего числа
+        }
+
+        // Вывод результата
+        Console.WriteLine($"Номер последнего числа, большего K: {lastIndex}");
+    }
+}
