@@ -1,0 +1,124 @@
+//String 4
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.Write("Введите целое число N (1 <= N <= 26): ");
+        int N;
+
+        // Проверяем, корректно ли введено значение
+        while (!int.TryParse(Console.ReadLine(), out N) || N < 1 || N > 26)
+        {
+            Console.WriteLine("Некорректный ввод. Пожалуйста, введите число от 1 до 26.");
+        }
+
+        // Выводим первые N заглавных букв латинского алфавита
+        for (char letter = 'A'; letter < 'A' + N; letter++)
+        {
+            Console.Write(letter + " ");
+        }
+
+        Console.WriteLine(); // Для перехода на новую строку после вывода
+    }
+}
+
+
+
+
+//String 19
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.Write("Введите строку: ");
+        string input = Console.ReadLine();
+
+        // Проверка на целое число
+        if (int.TryParse(input, out _))
+        {
+            Console.WriteLine(1);
+        }
+        // Проверка на вещественное число
+        else if (double.TryParse(input, out _))
+        {
+            Console.WriteLine(2);
+        }
+        // Если не число
+        else
+        {
+            Console.WriteLine(0);
+        }
+    }
+}
+
+
+
+
+//String 26
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.Write("Введите целое число N (>0): ");
+        int N = int.Parse(Console.ReadLine());
+
+        Console.Write("Введите строку S: ");
+        string S = Console.ReadLine();
+
+        // Проверка на положительность N
+        if (N <= 0)
+        {
+            Console.WriteLine("N должно быть больше 0.");
+            return;
+        }
+
+        // Преобразование строки S в нужный формат
+        string result;
+        if (S.Length > N)
+        {
+            // Если длина S больше N, обрезаем строку с начала
+            result = S.Substring(S.Length - N);
+        }
+        else if (S.Length < N)
+        {
+            // Если длина S меньше N, добавляем точки в начало
+            result = new string('.', N - S.Length) + S;
+        }
+        else
+        {
+            // Если длина S равна N, ничего не меняем
+            result = S;
+        }
+
+        Console.WriteLine("Результат: " + result);
+    }
+}
+
+
+
+
+//String 41
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.Write("Введите строку: ");
+        string input = Console.ReadLine();
+
+        // Удаление лишних пробелов и разбиение строки на слова
+        string[] words = input.Trim().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+        // Количество слов
+        int wordCount = words.Length;
+
+        Console.WriteLine("Количество слов в строке: " + wordCount);
+    }
+}
