@@ -1,0 +1,170 @@
+//Практическая №5
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Program
+{
+    static List<string> namesList = new List<string>();
+
+    static void Main(string[] args)
+    {
+        while (true)
+        {
+            Console.WriteLine("\nМеню:");
+            Console.WriteLine("1. Ввести ФИО");
+            Console.WriteLine("2. Вытащить фамилию, имя или отчество отдельно");
+            Console.WriteLine("3. Отсортировать фамилии по возрастанию или убыванию");
+            Console.WriteLine("4. Изменить своё имя, фамилию или отчество");
+            Console.WriteLine("5. Показать все ФИО");
+            Console.WriteLine("0. Выход");
+            Console.Write("Выберите действие: ");
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    EnterFullName();
+                    break;
+                case "2":
+                    ExtractNamePart();
+                    break;
+                case "3":
+                    SortByLastName();
+                    break;
+                case "4":
+                    ChangeFullName();
+                    break;
+                case "5":
+                    ShowAllFullNames();
+                    break;
+                case "0":
+                    return;
+                default:
+                    Console.WriteLine("Некорректный выбор, попробуйте снова.");
+                    break;
+            }
+        }
+    }
+
+    static void EnterFullName()
+    {
+        Console.Write("Введите ваше ФИО (Фамилия Имя Отчество): ");
+        string fullName = Console.ReadLine();
+        namesList.Add(fullName);
+        Console.WriteLine("ФИО добавлено.");
+    }
+
+    static void ExtractNamePart()
+    {
+        if (namesList.Count == 0)
+        {
+            Console.WriteLine("Список пуст. Сначала добавьте ФИО.");
+            return;
+        }
+
+        Console.Write("Введите индекс ФИО для извлечения (0 - {0}): ", namesList.Count - 1);
+        int index = int.Parse(Console.ReadLine());
+
+        if (index < 0 || index >= namesList.Count)
+        {
+            Console.WriteLine("Некорректный индекс.");
+            return;
+        }
+
+        var nameParts = namesList[index].Split(' ');
+        Console.WriteLine("1. Фамилия\n2. Имя\n3. Отчество");
+        Console.Write("Выберите часть для извлечения: ");
+        int partChoice = int.Parse(Console.ReadLine());
+
+        switch (partChoice)
+        {
+            case 1:
+                Console.WriteLine($"Фамилия: {nameParts[0]}");
+                break;
+            case 2:
+                Console.WriteLine($"Имя: {nameParts[1]}");
+                break;
+            case 3:
+                Console.WriteLine($"Отчество: {nameParts[2]}");
+                break;
+            default:
+                Console.WriteLine("Некорректный выбор.");
+                break;
+        }
+    }
+
+    static void SortByLastName()
+    {
+        if (namesList.Count == 0)
+        {
+            Console.WriteLine("Список пуст. Сначала добавьте ФИО.");
+            return;
+        }
+
+        Console.WriteLine("1. Сортировать по возрастанию\n2. Сортировать по убыванию");
+        Console.Write("Выберите способ сортировки: ");
+        int sortChoice = int.Parse(Console.ReadLine());
+
+        if (sortChoice == 1)
+        {
+            var sortedList = namesList.OrderBy(name => name.Split(' ')[0]).ToList();
+            Console.WriteLine("ФИО отсортированы по возрастанию:");
+            foreach (var name in sortedList)
+            {
+                Console.WriteLine(name);
+            }
+        }
+        else if (sortChoice == 2)
+        {
+            var sortedList = namesList.OrderByDescending(name => name.Split(' ')[0]).ToList();
+            Console.WriteLine("ФИО отсортированы по убыванию:");
+            foreach (var name in sortedList)
+            {
+                Console.WriteLine(name);
+            }
+        }
+        else
+        {
+            Console.WriteLine("Некорректный выбор.");
+        }
+    }
+
+    static void ChangeFullName()
+    {
+        if (namesList.Count == 0)
+        {
+            Console.WriteLine("Список пуст. Сначала добавьте ФИО.");
+            return;
+        }
+
+        Console.Write("Введите индекс ФИО для изменения (0 - {0}): ", namesList.Count - 1);
+        int index = int.Parse(Console.ReadLine());
+
+        if (index < 0 || index >= namesList.Count)
+        {
+            Console.WriteLine("Некорректный индекс.");
+            return;
+        }
+
+        Console.Write("Введите новое ФИО (Фамилия Имя Отчество): ");
+        string newFullName = Console.ReadLine();
+        namesList[index] = newFullName;
+        Console.WriteLine("ФИО изменено.");
+    }
+
+    static void ShowAllFullNames()
+    {
+        if (namesList.Count == 0)
+        {
+            Console.WriteLine("Список пуст.");
+            return;
+        }
+
+        Console.WriteLine("Все ФИО:");
+        foreach (var name in namesList)
+        {
+            Console.WriteLine(name);
+        }
+    }
+}
